@@ -1,5 +1,6 @@
-using ChaosQuantified
 using Base.Test
+using ChaosQuantified
 
-# write your own tests here
-@test 1 == 1
+include("helpers.jl")
+include("Rqa.jl")
+include("entropy.jl")
