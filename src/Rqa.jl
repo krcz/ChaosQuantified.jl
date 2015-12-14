@@ -1,5 +1,7 @@
 module Rqa
 
+default_min_length = 2
+
 """Helper struct keeping sizes of diagonal lines and total area
 of recurrence plot. In case of regular recurrence plot only upper triangle
 (without the diagonal) is considered; in case of cross recurrence plot it is
@@ -18,9 +20,11 @@ function RR(data :: RQAdata)
   end
 end
 
-function DET(data :: RQAdata, min_length :: Int = 2)
+"Computes ratio of points lying on lines; by line we understand long enough
+sequence of recurrences"
+function DET(data :: RQAdata, min_length :: Int = default_min_length)
   if isempty(data.lines)
-    0
+    NaN 
   else
     longblack = sum(data.lines) do kv
       if kv[1] >= min_length
@@ -35,9 +39,10 @@ function DET(data :: RQAdata, min_length :: Int = 2)
   end
 end
 
-"Computes mean length of line"
-function LMEAN(data :: RQAdata)
-  llines = filter((k,v) -> k > 1, data.lines)
+"Computes mean length of line; by line we understand long enough sequence
+of recurrences"
+function LMEAN(data :: RQAdata, min_length :: Int = default_min_length)
+  llines = filter((k,v) -> k >= min_length, data.lines)
   if isempty(llines)
     NaN
   else
@@ -47,9 +52,10 @@ function LMEAN(data :: RQAdata)
   end
 end
 
-"Computes entropy of lines"
-function LENT(data :: RQAdata)
-  llines = filter((k,v) -> k > 1, data.lines)
+"Computes entropy of lines; by line we understand long enough sequence
+of recurrences"
+function LENT(data :: RQAdata, min_length :: Int = default_min_length)
+  llines = filter((k,v) -> k >= min_length, data.lines)
   if isempty(llines)
     NaN
   else
