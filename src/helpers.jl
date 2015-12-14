@@ -31,4 +31,3 @@ size(de :: DelayEmbedding) = max(0, size(de.vec, 1) - (de.dim - 1) * de.lag)
 function getindex(de :: DelayEmbedding, i :: Int)
   slice(de.vec, i : de.lag : (i + (de.dim - 1) * de.lag))
 end
-

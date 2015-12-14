@@ -87,12 +87,12 @@ function rqadata(sig :: AbstractVector, eq :: Function = (x, y) -> x == y)
       lines[l] = get(lines, l, 0) + 1
     end
   end
+
   RQAdata(div(n*(n - 1), 2), lines)
 end
 
-"""
-Computes the recurrence data for Cross Recurrence Quantification Analysis
-"""
+"Computes the recurrence data for Cross Recurrence Quantification Analysis"
+
 function crqadata(
     sig1 :: AbstractVector,
     sig2 :: AbstractVector,
@@ -101,6 +101,8 @@ function crqadata(
   m = length(sig2)
   lines = Dict{Int64, Int64}()
 
+  # iterates over all diagonals in the rectangle
+  # lag 0 is the "main" diagonal - one passing through the top left corner
   for lag = (1 - n):(m - 1)
     l = 0
     for i in max(1, 1-lag):min(n, m - lag)
@@ -117,6 +119,7 @@ function crqadata(
       lines[l] = get(lines, l, 0) + 1
     end
   end
+
   RQAdata(n*m, lines)
 end
 
